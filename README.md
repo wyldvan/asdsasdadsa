@@ -8,7 +8,7 @@ Estou entregando aqui a resolção do meu desafio
 
 Eu não consegui fazer rodar o framework Symfony
   Eu não entendi muito bem como que roda o Symfony, ficou meio confuso pra mim.
-  Porem eu fiz rodar o PHP e meu web service esta atendendo o ele
+  Porem eu fiz rodar o PHP e meu web service esta atendendo ele
 
 Configurei Dockerfile e docker-compose
 
