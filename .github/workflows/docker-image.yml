@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build NGINX
+      run: pwd && ls -latr &&  cd nginx && docker build . --file Dockerfile --tag wyldvan-nginx-app:$(date +%s) && cd .. 
+    - name: Build PHP
+      run: pwd && ls -latr && cd backend && docker build . --file Dockerfile --tag wyldvan-php-app:$(date +%s)  && cd ..  
+    - name: Push to Registry
+      run:  echo "Simulando envio para o registry:docker push wyldvan-nginx-app:$(date +%s) ,docker push wyldvan-php-app:$(date +%s) "
+    - name: Deploy k8s
+      run:  echo "Simulando deploy em k8s:kubectl set image deployment/nginx nginx=wyldvan-nginx-app:$(date +%s), kubectl set image deployment/php-app php-app:wyldvan-php-app:$(date +%s) "
