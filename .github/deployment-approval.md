@@ -1,5 +1,5 @@
 ---
-title: Deployment Approval Required PIGZ for {{ env.ENVIRONMENT }}
+title: Deployment Approval Required for {{ env.ENVIRONMENT }}
 labels: deployment-requested
 ---
 
