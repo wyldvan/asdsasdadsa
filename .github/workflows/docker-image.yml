@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3.5.3
     - name: Build NGINX
       run: pwd && ls -latr &&  cd nginx && docker build . --file Dockerfile --tag wyldvan-nginx-app:$(date +%s) && cd .. 
     - name: Build PHP
