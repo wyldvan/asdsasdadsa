@@ -16,7 +16,7 @@ RUN rm -rf /var/cache/apk/*
  
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-#WORKDIRrr .
+#WORKDIRrrr .
 COPY composer.json composer.lock ./
 RUN composer install --no-scripts --no-autoloader
 
