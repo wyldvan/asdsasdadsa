@@ -10,6 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3.5.3
+
+    - name: Simulate a Build
+      run: echo 'Pigz-App' > output.txt
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: 'your-artifact-name'
+        path: 'output.txt'
+  
+    - name: Create an issue
+      uses: JasonEtco/create-an-issue@v2.9.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
+        ENVIRONMENT: Dev
+        RUNNUMBER: ${{ github.run_number  }}
+      with:         
+        filename: .github/deployment-approval.md
     
     - name: Build NGINX
       run: pwd && ls -latr &&  cd nginx && docker build . --file Dockerfile --tag wyldvan-nginx-app:$(date +%s) && cd .. 
