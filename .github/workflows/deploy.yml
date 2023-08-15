@@ -39,7 +39,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2.27.0
         with:
           github_token: ${{ secrets.APROVE_TOKEN }}
-          workflow: build.yml
+          workflow: docker-image.yml
           repo: wyldvan/Hello-World-Pigz
           run_number: ${{ needs.parse.outputs.ci-run-number }}
           name: 'your-artifact-name'
@@ -68,7 +68,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2.27.0
         with:
           GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
-          workflow: build.yml
+          workflow: docker-image.yml
           repo: wyldvan/Hello-World-Pigz
           run_number: ${{ needs.parse.outputs.ci-run-number }}
           name: 'your-artifact-name'
