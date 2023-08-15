@@ -65,8 +65,9 @@ jobs:
     steps:
                
       - name: Download workflow artifact
-        uses: dawidd6/action-download-artifact@v2.15.0
+        uses: dawidd6/action-download-artifact@v2.27.0
         with:
+          GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
           workflow: build.yml
           repo: wyldvan/Hello-World-Pigz
           run_number: ${{ needs.parse.outputs.ci-run-number }}
@@ -86,5 +87,5 @@ jobs:
         if: ${{ needs.deploy-dev.result == 'success' || needs.deploy-prod.result == 'success' }}
         uses: peter-evans/close-issue@v3.0.1
         with:
-          token: ${{ secrets.APROVE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
           comment: 'Deployment Completed 🌟'
