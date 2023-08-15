@@ -31,18 +31,10 @@ jobs:
     needs: [parse]
     if: ${{ needs.parse.outputs.deploy-environment == 'Dev' }}
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v2
-
-      - name: Create approval Issue for Prod
-        uses: JasonEtco/create-an-issue@v2.9.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
-          ENVIRONMENT: Prod
-          RUNNUMBER: ${{ needs.parse.outputs.ci-run-number }}
-        with:
-          filename: .github/deployment-approval.md
-      
+               
       - name: Download workflow artifact
         uses: dawidd6/action-download-artifact@v2.27.0
         with:
@@ -56,12 +48,20 @@ jobs:
       - name: Deploy to DEV
         run: echo Simulating Deployment    
           
-
+      - uses: JasonEtco/create-an-issue@v2.9.1
+        name: Create approval Issue for Prod
+        env:
+          GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
+          ENVIRONMENT: Prod
+          RUNNUMBER: ${{ needs.parse.outputs.ci-run-number }}
+        with:
+          filename: .github/deployment-approval.md
     
   deploy-prod:
     needs: [parse]
     if: ${{ needs.parse.outputs.deploy-environment == 'Prod' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest    
+
     steps:
                
       - name: Download workflow artifact
