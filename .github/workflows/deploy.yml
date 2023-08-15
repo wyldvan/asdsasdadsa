@@ -32,44 +32,16 @@ jobs:
     if: ${{ needs.parse.outputs.deploy-environment == 'Dev' }}
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
 
-      - uses: JasonEtco/create-an-issue@v2.9.1
-        name: Create approval Issue for Prod
+      - name: Create approval Issue for Prod
+        uses: JasonEtco/create-an-issue@v2.9.1
         env:
           GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
           ENVIRONMENT: Prod
           RUNNUMBER: ${{ needs.parse.outputs.ci-run-number }}
         with:
           filename: .github/deployment-approval.md
-      
-      - name: Wait for Approval
-        uses: actions/github-script@v2.1.0
-        with:
-          token: ${{ secrets.APROVE_TOKEN }}
-          script: |
-            const issue = await github.issues.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number
-            });
-            if (!issue.data.body.includes('Approved')) {
-              core.setFailed('Approval not found in issue comment.');
-            }
-                 
-      - uses: actions/checkout@v2
-                 
-      - name: Download workflow artifact
-        uses: dawidd6/action-download-artifact@v2.27.0
-        with:
-          github_token: ${{ secrets.APROVE_TOKEN }}
-          workflow: docker-image.yml
-          repo: wyldvan/Hello-World-Pigz
-          run_number: ${{ needs.parse.outputs.ci-run-number }}
-          name: 'your-artifact-name'
-          path: ${{ github.workspace }}
-          
-      - name: Deploy to DEV
-        run: echo Simulating Deployment    
       
       - name: Download workflow artifact
         uses: dawidd6/action-download-artifact@v2.27.0
