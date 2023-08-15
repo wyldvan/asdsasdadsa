@@ -32,6 +32,16 @@ jobs:
     if: ${{ needs.parse.outputs.deploy-environment == 'Dev' }}
     runs-on: ubuntu-latest
     steps:
+
+      - uses: JasonEtco/create-an-issue@v2.9.1
+        name: Create approval Issue for Prod
+        env:
+          GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
+          ENVIRONMENT: Prod
+          RUNNUMBER: ${{ needs.parse.outputs.ci-run-number }}
+        with:
+          filename: .github/deployment-approval.md
+      
       - name: Wait for Approval
         uses: actions/github-script@v2.1.0
         with:
@@ -60,15 +70,6 @@ jobs:
           
       - name: Deploy to DEV
         run: echo Simulating Deployment    
-            
-      - uses: JasonEtco/create-an-issue@v2.9.1
-        name: Create approval Issue for Prod
-        env:
-          GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
-          ENVIRONMENT: Prod
-          RUNNUMBER: ${{ needs.parse.outputs.ci-run-number }}
-        with:
-          filename: .github/deployment-approval.md
       
       - name: Download workflow artifact
         uses: dawidd6/action-download-artifact@v2.27.0
