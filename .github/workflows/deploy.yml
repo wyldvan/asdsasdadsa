@@ -42,7 +42,7 @@ jobs:
           workflow: build.yml
           repo: wyldvan/Hello-World-Pigz
           run_number: ${{ needs.parse.outputs.ci-run-number }}
-          name: your-artifact-name
+          name: 'your-artifact-name'
           path: ${{ github.workspace }}
           
       - name: Deploy to DEV
