@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for Approval
-        uses: actions/github-script@v6
+        uses: actions/github-script@v2.1.0
         with:
           token: ${{ secrets.APROVE_TOKEN }}
           script: |
