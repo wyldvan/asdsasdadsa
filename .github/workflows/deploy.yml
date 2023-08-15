@@ -87,5 +87,5 @@ jobs:
         if: ${{ needs.deploy-dev.result == 'success' || needs.deploy-prod.result == 'success' }}
         uses: peter-evans/close-issue@v3.0.1
         with:
-          GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
+          token: ${{ secrets.APROVE_TOKEN }}
           comment: 'Deployment Completed 🌟'
