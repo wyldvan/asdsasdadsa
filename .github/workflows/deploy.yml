@@ -27,7 +27,7 @@ jobs:
           issue_id: ${{ github.event.issue.number }}         
           payload_marker: target_payload 
   
-  deploy-dev:
+  approve-deploy:
     needs: [parse]
     if: ${{ needs.parse.outputs.deploy-environment == 'Dev' }}
     runs-on: ubuntu-latest
@@ -56,29 +56,9 @@ jobs:
           RUNNUMBER: ${{ needs.parse.outputs.ci-run-number }}
         with:
           filename: .github/deployment-approval.md
-    
-  deploy-prod:
-    needs: [parse]
-    if: ${{ needs.parse.outputs.deploy-environment == 'Prod' }}
-    runs-on: ubuntu-latest    
-
-    steps:
-               
-      - name: Download workflow artifact
-        uses: dawidd6/action-download-artifact@v2.27.0
-        with:
-          GITHUB_TOKEN: ${{ secrets.APROVE_TOKEN }}
-          workflow: docker-image.yml
-          repo: wyldvan/Hello-World-Pigz
-          run_number: ${{ needs.parse.outputs.ci-run-number }}
-          name: 'your-artifact-name'
-          path: ${{ github.workspace }}
-          
-      - name: Deploy to PROD
-        run: echo Simulating Deployment 
 
   close-issue:
-    needs: [deploy-dev, deploy-prod]
+    needs: [approve-deploy]
     if: ${{ always() }}
     runs-on: ubuntu-latest  
     
